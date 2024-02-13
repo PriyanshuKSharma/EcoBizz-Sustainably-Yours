@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ecobizz
 
 A new Flutter project.
@@ -14,3 +15,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# EcoBizz-Sustainably-Yours
+An E-commerce app exclusively for sustainable products
+>>>>>>> 8e143383069e4ffc60b0255dc8aae69636765b9d
