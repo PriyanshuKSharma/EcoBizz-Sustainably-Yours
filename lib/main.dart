@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ecommerce App',
+      title: 'EcoBizz',
       home: HomePage(), // Set the home page of the app
     );
   }

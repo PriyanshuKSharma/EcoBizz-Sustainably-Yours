@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:EcoBizz/cart.dart';
 import 'package:EcoBizz/profile.dart';
 import 'package:EcoBizz/favorites.dart';
-
+import 'package:EcoBizz/product.dart';
+import 'package:EcoBizz/home_page_content.dart'; // Importing HomePageContent class
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,24 +12,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
+  late List<Widget> _pages; // Declare _pages as late
 
-  final List<Widget> _pages = [
-    HomePageContent(), // Your home page content
-    CartPage(),
-    FavoritesPage(),
-    ProfilePage(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      HomePageContent(products: products), // Your home page content
+      CartPage(),
+      FavoritesPage(),
+      ProfilePage(),
+    ];
+  }
+
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text('EcoBizzz'), // Name of the app
-          ],
+        title: GestureDetector(
+          onTap: () {
+            setState(() {
+              _selectedIndex = 0; // Navigate to the home page
+            });
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text('EcoBizzz'), // Name of the app
+            ],
+          ),
         ),
         actions: <Widget>[
           IconButton(
@@ -39,84 +54,22 @@ class _HomePageState extends State<HomePage> {
           SizedBox(width: 10), // Add some space between the search icon and the edge of the screen
         ],
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle action for the first button
-                  },
-                  child: Text('Toy'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle action for the second button
-                  },
-                  child: Text('Electronics'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle action for the third button
-                  },
-                  child: Text('Clothing'),
-                ),
-                // Add more buttons as needed
-              ],
-            ),
-          ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: CurvedNavigationBar(
+        index: 0,
+        height: 50.0,
+        backgroundColor: Colors.blueAccent,
+        items: <Widget>[
+          Icon(Icons.shopping_cart, size: 20), // Cart button
+          Icon(Icons.favorite, size: 20), // Favorites button
+          Icon(Icons.person, size: 20), // Profile button
         ],
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index + 1;
+          });
+        },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue, // Background color of the BottomNavigationBar
-        selectedItemColor: Colors.green, // Color of the selected item
-        unselectedItemColor: Colors.black, // Color of the unselected items
-        selectedLabelStyle: TextStyle(color: Colors.black), // Color of the labels for selected items
-        unselectedLabelStyle: TextStyle(color: Colors.black), // Color of the labels for unselected items
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      if (index == 3) { // ProfilePage is at index 3
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ProfilePage()),
-        );
-      }
-    });
-  }
-}
-
-class HomePageContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Home Page Content'),
     );
   }
 }
