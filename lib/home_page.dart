@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:EcoBizz/cart.dart';
-import 'package:EcoBizz/profile.dart';
-import 'package:EcoBizz/favorites.dart';
-import 'package:EcoBizz/product.dart';
-import 'package:EcoBizz/home_page_content.dart'; // Importing HomePageContent class
+import 'package:EcoBizz/product.dart'; 
+import 'package:EcoBizz/cart.dart' as Cart; 
+import 'package:EcoBizz/favorites.dart' as Fav; 
+import 'package:EcoBizz/home_page_content.dart'; 
+import 'package:EcoBizz/profile.dart'; // Import the ProfilePage
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,20 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<Widget> _pages; // Declare _pages as late
-
-  @override
-  void initState() {
-    super.initState();
-    _pages = [
-      HomePageContent(products: products), // Your home page content
-      CartPage(),
-      FavoritesPage(),
-      ProfilePage(),
-    ];
-  }
-
-  int _selectedIndex = 0;
+  List<Product> cartItems = [];
+  List<Product> favoriteItems = [];
 
   @override
   Widget build(BuildContext context) {
@@ -33,28 +21,22 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: GestureDetector(
           onTap: () {
-            setState(() {
-              _selectedIndex = 0; // Navigate to the home page
-            });
+            // Handle tapping on app title if needed
+            Navigator.pop(context); // Navigate back to the home page content
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text('EcoBizzz'), // Name of the app
+              Text('EcoBizzz'),
             ],
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search), // Search icon
-            onPressed: () {
-              // Handle search action
-            },
-          ),
-          SizedBox(width: 10), // Add some space between the search icon and the edge of the screen
-        ],
       ),
-      body: _pages[_selectedIndex],
+      body: HomePageContent(
+        products: products, // Assuming `products` is defined somewhere
+        cartItems: cartItems,
+        favoriteItems: favoriteItems,
+      ),
       bottomNavigationBar: CurvedNavigationBar(
         index: 0,
         height: 50.0,
@@ -66,7 +48,25 @@ class _HomePageState extends State<HomePage> {
         ],
         onTap: (index) {
           setState(() {
-            _selectedIndex = index + 1;
+            if (index == 0) {
+              // Navigate to the cart page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Cart.CartPage(cartItems: cartItems)),
+              );
+            } else if (index == 1) {
+              // Navigate to the favorites page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Fav.FavoritesPage(favoriteItems: favoriteItems)),
+              );
+            } else if (index == 2) {
+              // Navigate to the profile page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            }
           });
         },
       ),

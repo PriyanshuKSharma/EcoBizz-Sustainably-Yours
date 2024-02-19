@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:EcoBizz/product.dart';
 
 class FavoritesPage extends StatelessWidget {
+  final List<Product> favoriteItems;
+
+  const FavoritesPage({required this.favoriteItems});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -8,21 +13,26 @@ class FavoritesPage extends StatelessWidget {
         title: Text('Favorites'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              'assets/favorites_image.png', // Placeholder image for favorites
-              width: 150,
-              height: 150,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Your Favorites',
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
+        child: favoriteItems.isNotEmpty
+            ? ListView.builder(
+                itemCount: favoriteItems.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Row(
+                      children: [
+                        Image.asset(
+                          favoriteItems[index].image,
+                          width: 50, // Set width as per requirement
+                          height: 50, // Set height as per requirement
+                        ),
+                        SizedBox(width: 10),
+                        Text(favoriteItems[index].title),
+                      ],
+                    ),
+                  );
+                },
+              )
+            : Text('No favorite items'),
       ),
     );
   }

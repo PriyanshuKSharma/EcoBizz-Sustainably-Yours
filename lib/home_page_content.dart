@@ -1,133 +1,140 @@
 import 'package:flutter/material.dart';
-import 'package:EcoBizz/product.dart'; // Importing the Product class
+import 'package:EcoBizz/product.dart'; 
+import 'package:EcoBizz/cart.dart' as Cart; 
+import 'package:EcoBizz/favorites.dart' as Fav; 
 
-class HomePageContent extends StatelessWidget {
-  final List<Product> products; // Define the products list as a field
+class HomePageContent extends StatefulWidget {
+  final List<Product> products;
+  final List<Product> cartItems;
+  final List<Product> favoriteItems;
 
-  // Constructor to receive the products list
-  HomePageContent({required this.products});
+  HomePageContent({
+    required this.products,
+    required this.cartItems,
+    required this.favoriteItems,
+  });
+
+  @override
+  _HomePageContentState createState() => _HomePageContentState();
+}
+
+class _HomePageContentState extends State<HomePageContent> {
+  TextEditingController searchController = TextEditingController();
+  List<Product> filteredProducts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredProducts.addAll(widget.products);
+  }
+
+  void filterProducts(String query) {
+    filteredProducts.clear();
+    if (query.isNotEmpty) {
+      filteredProducts.addAll(widget.products.where((product) => product.title.toLowerCase().contains(query.toLowerCase())));
+    } else {
+      filteredProducts.addAll(widget.products);
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('Products'), // Name of the app
-          ],
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search), // Search icon
-            onPressed: () {
-              // Handle search action
-            },
-          ),
-          SizedBox(width: 10), // Add some space between the search icon and the edge of the screen
-        ],
-      ),
-      body: Column(
-        children: [
-          Container(
-            height: 50, // Specify a fixed height for the SingleChildScrollView
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle action for the first button
-                    },
-                    child: Text('Toy'),
+            Text('Product'), 
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: TextField(
+                  controller: searchController,
+                  onChanged: (value) {
+                    filterProducts(value);
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    border: InputBorder.none,
+                    icon: Icon(Icons.search),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle action for the second button
-                    },
-                    child: Text('Electronics'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle action for the third button
-                    },
-                    child: Text('Clothing'),
-                  ),
-                  // Add more buttons as needed
-                ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    // Handle product tap
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 5,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
+          ],
+        ),
+      ),
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
+        itemCount: filteredProducts.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              // Handle product tap
+            },
+            child: Card(
+              elevation: 5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Image.asset(
+                      filteredProducts[index].image, 
+                      fit: BoxFit.cover,
                     ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: 150,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(products[index].image),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
+                        Text(
+                          filteredProducts[index].title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                products[index].title,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '\$${products[index].price}',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
+                        Text(
+                          '\$${filteredProducts[index].price}',
+                          style: const TextStyle(
+                            color: Colors.green,
                           ),
                         ),
                       ],
                     ),
                   ),
-                );
-              },
+                  ButtonBar(
+                    alignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.cartItems.add(filteredProducts[index]);
+                          });
+                        },
+                        icon: Icon(Icons.add_shopping_cart),
+                        tooltip: 'Add to Cart',
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.favoriteItems.add(filteredProducts[index]);
+                          });
+                        },
+                        icon: Icon(Icons.favorite),
+                        tooltip: 'Add to Favorites',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
