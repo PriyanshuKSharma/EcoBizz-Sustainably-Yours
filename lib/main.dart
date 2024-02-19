@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:EcoBizz/home_page.dart'; // Importing the HomePage class
-import 'package:EcoBizz/main.dart';
+//import 'package:EcoBizz/main.dart';
 
 void main() {
   runApp(const MyApp());
