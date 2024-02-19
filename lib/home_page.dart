@@ -7,6 +7,8 @@ import 'package:EcoBizz/home_page_content.dart';
 import 'package:EcoBizz/profile.dart'; // Import the ProfilePage
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -24,7 +26,7 @@ class _HomePageState extends State<HomePage> {
             // Handle tapping on app title if needed
             Navigator.pop(context); // Navigate back to the home page content
           },
-          child: Row(
+          child: const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text('EcoBizzz'),
@@ -41,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         index: 0,
         height: 50.0,
         backgroundColor: Colors.blueAccent,
-        items: <Widget>[
+        items: const <Widget>[
           Icon(Icons.shopping_cart, size: 20), // Cart button
           Icon(Icons.favorite, size: 20), // Favorites button
           Icon(Icons.person, size: 20), // Profile button
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               // Navigate to the profile page
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
               );
             }
           });

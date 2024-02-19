@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "D:/SEM-4/Projects/Flutter_Based/ecobizz/windows/flutter"
+    "cmake.sourceDirectory": "D:/SEM-4/Projects/Flutter_Based/ecobizz/windows/flutter",
+    "java.configuration.updateBuildConfiguration": "automatic"
 }

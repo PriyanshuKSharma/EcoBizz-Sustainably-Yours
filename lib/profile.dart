@@ -1,78 +1,80 @@
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 16),
-            CircleAvatar(
+            const SizedBox(height: 16),
+            const CircleAvatar(
               radius: 60,
               backgroundImage: AssetImage('assets/profile_avatar.jpg'),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Sinister Xi',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               'sinisterxi@rndmail.com',
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 // Handle upgrade to PRO
               },
-              child: Text('Upgrade to PRO'),
+              child: const Text('Upgrade to PRO'),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             ListTile(
-              leading: Icon(Icons.security),
-              title: Text('Privacy'),
+              leading: const Icon(Icons.security),
+              title: const Text('Privacy'),
               onTap: () {
                 // Navigate to privacy section
               },
             ),
             ListTile(
-              leading: Icon(Icons.history),
-              title: Text('Purchase History'),
+              leading: const Icon(Icons.history),
+              title: const Text('Purchase History'),
               onTap: () {
                 // Navigate to purchase history section
               },
             ),
             ListTile(
-              leading: Icon(Icons.help),
-              title: Text('Help & Support'),
+              leading: const Icon(Icons.help),
+              title: const Text('Help & Support'),
               onTap: () {
                 // Navigate to help & support section
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
               onTap: () {
                 // Navigate to settings section
               },
             ),
             ListTile(
-              leading: Icon(Icons.person_add),
-              title: Text('Invite a Friend'),
+              leading: const Icon(Icons.person_add),
+              title: const Text('Invite a Friend'),
               onTap: () {
                 // Navigate to invite a friend section
               },
             ),
             ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
               onTap: () {
                 // Handle logout action
               },

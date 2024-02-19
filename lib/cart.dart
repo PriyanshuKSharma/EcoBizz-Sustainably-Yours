@@ -4,13 +4,13 @@ import 'package:EcoBizz/product.dart';
 class CartPage extends StatelessWidget {
   final List<Product> cartItems;
 
-  const CartPage({required this.cartItems});
+  const CartPage({super.key, required this.cartItems});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
+        title: const Text('Cart'),
       ),
       body: Center(
         child: ListView.builder(
@@ -24,7 +24,7 @@ class CartPage extends StatelessWidget {
                     width: 50, // Set width as per requirement
                     height: 50, // Set height as per requirement
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(cartItems[index].title),
                 ],
               ),
