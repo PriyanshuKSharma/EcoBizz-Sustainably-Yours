@@ -21,7 +21,7 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Sinister Xi',
+              'Priyanshu K Sharma',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
